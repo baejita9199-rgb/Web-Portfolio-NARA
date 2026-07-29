@@ -65,9 +65,14 @@ respectively; both are documented in `.env.example`.
 
 [`.github/workflows/verify.yml`](.github/workflows/verify.yml) runs `npm run
 verify` — lint, typecheck, unit tests, production build — on every push and pull
-request, against the oldest Node this project claims to support (`engines`
-declares `>=20.9.0`, so CI pins that floor rather than a newer runtime that
-might hide an incompatibility).
+request.
+
+Node is pinned to **22.12.0**, the floor of the range `engines` declares
+(`^20.19.0 || >=22.12.0`). CI runs the minimum rather than a newer runtime,
+because that is what keeps the claim honest — development happens on a current
+Node. The floor comes from rolldown, vite and `@vitejs/plugin-react`, which all
+require `^20.19.0 || >=22.12.0`; 22.12.0 is preferred over 20.19.0 because the
+Node 20 line reached end of life in April 2026.
 
 It verifies only. There is no deployment step, and adding one is a separate
 decision. The Playwright suite is also not in CI: it needs a browser download

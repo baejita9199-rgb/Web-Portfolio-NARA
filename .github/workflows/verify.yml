@@ -19,12 +19,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # package.json declares `engines.node: >=20.9.0`. CI pins that floor
-      # rather than the newest LTS: development happens on a current Node, so
-      # testing the minimum here is what actually keeps the claim honest.
+      # Pinned to the floor of the supported range in package.json, so CI is
+      # what keeps that claim honest — development happens on a current Node.
+      #
+      # The floor is set by rolldown, vite and @vitejs/plugin-react, which all
+      # require `^20.19.0 || >=22.12.0`. An earlier pin of 20.9.0 (the old,
+      # wrong `engines` value) failed here: Node 20.9 has no `util.styleText`,
+      # so Vitest could not start at all. 22.12.0 is chosen over 20.19.0
+      # because the Node 20 line reached end of life in April 2026.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.9.0
+          node-version: 22.12.0
           cache: npm
 
       # `npm ci` rather than `npm install` — it installs exactly what the
