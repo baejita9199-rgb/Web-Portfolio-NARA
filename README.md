@@ -38,6 +38,42 @@ changing an art-direction recipe.
 | `npm run measure:performance` | Record LCP, CLS and load weight from a real browser |
 | `npm run verify` | lint → typecheck → test → build |
 
+### Configuration
+
+Nothing has to be configured. Every variable is an override, and the defaults
+are chosen so that an unconfigured build is a safe one. See
+**[.env.example](.env.example)** for the full list and copy it to get started:
+
+```bash
+cp .env.example .env.local
+```
+
+The one worth knowing about is **`NEXT_PUBLIC_SITE_URL`**, the absolute base for
+canonical URLs, Open Graph tags, `robots.txt` and `sitemap.xml`. It defaults to
+`https://nara-house.example` — a reserved TLD that cannot resolve, so a build
+with nothing set never advertises an address that might be taken for a real
+business. Set it to the origin the site is served from, without a trailing
+slash, and set it at **build** time: the `NEXT_PUBLIC_` prefix inlines it into
+the client bundle, so `next start` is too late.
+
+`FFMPEG_PATH` and `PORT` affect only media generation and the Playwright suite
+respectively; both are documented in `.env.example`.
+
+---
+
+## Continuous integration
+
+[`.github/workflows/verify.yml`](.github/workflows/verify.yml) runs `npm run
+verify` — lint, typecheck, unit tests, production build — on every push and pull
+request, against the oldest Node this project claims to support (`engines`
+declares `>=20.9.0`, so CI pins that floor rather than a newer runtime that
+might hide an incompatibility).
+
+It verifies only. There is no deployment step, and adding one is a separate
+decision. The Playwright suite is also not in CI: it needs a browser download
+and a built server, which is worth doing deliberately rather than by default.
+Run it locally with `npm run build && npm run test:e2e`.
+
 ---
 
 ## Architecture
@@ -259,3 +295,9 @@ regression guard rather than a field measurement. Numbers and caveats in
 
 A concept project by Jedsada Creative Technology Studio. NARA HOUSE is a
 fictional hospitality brand created for portfolio demonstration.
+
+## Licence
+
+Proprietary — all rights reserved. See **[LICENSE](LICENSE)**. The source is
+public to be read and evaluated, not to be reused; no licence to copy, modify or
+redistribute is granted.
