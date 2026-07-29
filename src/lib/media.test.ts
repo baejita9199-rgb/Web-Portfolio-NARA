@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  resolvePoster,
-  resolvePreload,
-  resolveVideoSources,
-} from "./media";
+import { resolvePreload, resolveVideoSources } from "./media";
 
 const base = {
   desktopSrc: "/nara-house/video/hero-desktop.webm",
@@ -69,23 +65,6 @@ describe("asset source selection", () => {
     });
     // No mobile MP4 and no desktop MP4 were supplied, so nothing is invented.
     expect(sources).toHaveLength(1);
-  });
-});
-
-describe("poster selection", () => {
-  const poster = "/nara-house/images/hero-poster-desktop.webp";
-  const mobilePoster = "/nara-house/images/hero-poster-mobile.webp";
-
-  it("uses the portrait poster on mobile when one exists", () => {
-    expect(resolvePoster(poster, mobilePoster, true)).toBe(mobilePoster);
-  });
-
-  it("uses the landscape poster on desktop", () => {
-    expect(resolvePoster(poster, mobilePoster, false)).toBe(poster);
-  });
-
-  it("falls back to the landscape poster when no portrait crop exists", () => {
-    expect(resolvePoster(poster, undefined, true)).toBe(poster);
   });
 });
 

@@ -52,6 +52,58 @@ describe("AmbientVideo — playback attributes", () => {
   });
 });
 
+describe("AmbientVideo — poster art direction", () => {
+  /**
+   * The crop must be decided by the browser from the markup, never by React
+   * after hydration. A JS-chosen poster is the desktop one in the delivered
+   * HTML, so a phone downloads the landscape still and then the portrait one
+   * on top of it — and the poster is the hero's LCP element.
+   */
+  function posterSources(container: HTMLElement): HTMLSourceElement[] {
+    return Array.from(container.querySelectorAll("picture source"));
+  }
+
+  it("offers the portrait crop through a media-gated source", () => {
+    const { container } = render(<AmbientVideo {...props} priority />);
+    const sources = posterSources(container);
+
+    expect(sources).toHaveLength(1);
+    expect(sources[0]!.media).toBe(breakpoints.mobile);
+    expect(sources[0]!.srcset).toContain(
+      encodeURIComponent(props.mobilePoster),
+    );
+  });
+
+  it("offers the landscape crop on the img itself", () => {
+    const { container } = render(<AmbientVideo {...props} priority />);
+    const img = container.querySelector("picture img")!;
+
+    expect(img.getAttribute("srcset")).toContain(
+      encodeURIComponent(props.poster),
+    );
+  });
+
+  it("picks the same markup whatever the media query currently reports", () => {
+    setMediaQuery(breakpoints.mobile, true);
+    const { container } = render(<AmbientVideo {...props} priority />);
+
+    // Identical to the desktop render above: nothing here is JS-conditional.
+    expect(posterSources(container)[0]!.media).toBe(breakpoints.mobile);
+    expect(
+      container.querySelector("picture img")!.getAttribute("srcset"),
+    ).toContain(encodeURIComponent(props.poster));
+  });
+
+  it("renders no media-gated source when there is no portrait crop", () => {
+    const { mobilePoster: _omitted, ...withoutPortrait } = props;
+    const { container } = render(
+      <AmbientVideo {...withoutPortrait} priority />,
+    );
+
+    expect(posterSources(container)).toHaveLength(0);
+  });
+});
+
 describe("AmbientVideo — lazy source attachment", () => {
   it("downloads nothing until the clip approaches the viewport", () => {
     const { container } = render(<AmbientVideo {...props} />);

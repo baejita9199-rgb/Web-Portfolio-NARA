@@ -1,16 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { breakpoints, useMediaQuery } from "@/hooks/useMediaQuery";
 import { useIntersectionVideo } from "@/hooks/useIntersectionVideo";
 import { useIsHydrated } from "@/hooks/useIsHydrated";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import {
-  resolvePoster,
-  resolvePreload,
-  resolveVideoSources,
-} from "@/lib/media";
+import { resolvePreload, resolveVideoSources } from "@/lib/media";
 import styles from "./AmbientVideo.module.css";
 
 export type AmbientVideoProps = {
@@ -77,7 +73,29 @@ export function AmbientVideo({
     rootMargin: "300px 0px",
   });
 
-  const activePoster = resolvePoster(poster, mobilePoster, isMobile);
+  /*
+   * The poster is art-directed by the browser, not by React.
+   *
+   * `useMediaQuery` cannot know the viewport during server rendering, so a
+   * JS-chosen crop is always the desktop one in the delivered HTML and only
+   * swaps after hydration — by which time the phone has already downloaded the
+   * landscape file and then downloads the portrait one on top of it. That is
+   * the same defect already fixed for the `<source>` list, and it mattered more
+   * here: the poster is the LCP element.
+   *
+   * `getImageProps` gives the responsive sets `next/image` would have built,
+   * which a `<picture>` hands to the browser's own selection — resolved from
+   * the markup, before hydration, exactly once.
+   */
+  const posterProps = { alt, fill: true, sizes, priority } as const;
+  const { props: desktopPoster } = getImageProps({
+    ...posterProps,
+    src: poster,
+  });
+  const mobilePosterSet = mobilePoster
+    ? getImageProps({ ...posterProps, src: mobilePoster }).props
+    : null;
+
   /*
    * Sources are never written during the hydration pass. A `<source>` in the
    * server HTML is chosen before the viewport is known, and the browser starts
@@ -108,15 +126,27 @@ export function AmbientVideo({
 
   return (
     <div className={[styles.frame, className].filter(Boolean).join(" ")}>
-      <Image
-        src={activePoster}
-        alt={alt}
-        fill
-        sizes={sizes}
-        priority={priority}
-        className={styles.poster}
-        style={{ objectPosition }}
-      />
+      <picture>
+        {mobilePosterSet ? (
+          <source
+            media={breakpoints.mobile}
+            srcSet={mobilePosterSet.srcSet}
+            sizes={mobilePosterSet.sizes}
+          />
+        ) : null}
+        {/*
+          This *is* a next/image — assembled through getImageProps so a
+          <picture> can art-direct it, which the component form cannot express.
+          `alt` is repeated after the spread only so it is statically visible to
+          the a11y lint rule; it carries the same value either way.
+        */}
+        <img
+          {...desktopPoster}
+          alt={alt}
+          className={styles.poster}
+          style={{ ...desktopPoster.style, objectPosition }}
+        />
+      </picture>
 
       {canPlay ? (
         <video

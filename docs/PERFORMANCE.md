@@ -56,6 +56,14 @@ Lighthouse against a real deployment before quoting a score anywhere.
       before React can correct it. This was a real bug: phones were downloading
       the 181 KB landscape hero and never the portrait one. Locked in by an e2e
       test that fails if the wrong crop is even *requested*.
+- [x] **The hero poster is art-directed by the browser, not by React.** The same
+      defect the entry above describes for `<source>` outlived that fix in the
+      poster, which chose its crop from `useMediaQuery` — false during server
+      rendering, so the phone fetched the 16:9 still from the delivered HTML and
+      the 3:4 one after hydration, downloading both and shifting its own LCP
+      element. `AmbientVideo` now emits a `<picture>` built from
+      `getImageProps`, so the crop is resolved from the markup, before
+      hydration, exactly once. Covered by the same e2e test as the clips.
 - [x] Every other clip has `preload="none"` and no `<source>` in the DOM until
       it approaches the viewport
 - [x] Clips pause when scrolled out of view and when the tab is hidden

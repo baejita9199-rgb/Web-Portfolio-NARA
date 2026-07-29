@@ -56,14 +56,12 @@ export function resolveVideoSources({
   return sources;
 }
 
-/** Portrait poster on narrow viewports when one is supplied, else the wide crop. */
-export function resolvePoster(
-  poster: string,
-  mobilePoster: string | undefined,
-  isMobile: boolean,
-): string {
-  return isMobile && mobilePoster ? mobilePoster : poster;
-}
+/*
+ * There is deliberately no `resolvePoster`. Choosing a poster crop in JS means
+ * choosing it after hydration, which made phones fetch the landscape still and
+ * then the portrait one on top of it. `AmbientVideo` art-directs the poster in
+ * a `<picture>` instead, so the browser resolves it from the markup.
+ */
 
 /**
  * `preload` is a bandwidth decision, not a cosmetic one. Only the hero is worth

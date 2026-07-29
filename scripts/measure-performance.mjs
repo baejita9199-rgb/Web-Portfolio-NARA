@@ -13,13 +13,21 @@
  */
 
 import { chromium } from "@playwright/test";
+import { existsSync } from "node:fs";
 
 const args = process.argv.slice(2);
 const baseIndex = args.indexOf("--base");
 const BASE =
   baseIndex >= 0 ? args[baseIndex + 1] : "http://127.0.0.1:3000";
 
+/*
+ * Mirrors playwright.config.ts: the container this project was built in
+ * provisions Chromium system-wide, but on a normal machine that path does not
+ * exist and Playwright must resolve its own managed download instead. Passing
+ * the path unconditionally made this script unrunnable anywhere else.
+ */
 const SYSTEM_CHROMIUM = "/opt/pw-browsers/chromium";
+const executablePath = existsSync(SYSTEM_CHROMIUM) ? SYSTEM_CHROMIUM : undefined;
 
 const PROFILES = [
   { name: "desktop", viewport: { width: 1440, height: 900 } },
@@ -117,7 +125,7 @@ async function measure(browser, profile, route) {
 
 async function main() {
   const browser = await chromium.launch({
-    executablePath: SYSTEM_CHROMIUM,
+    executablePath,
     args: ["--autoplay-policy=no-user-gesture-required"],
   });
 
