@@ -68,9 +68,12 @@ test.describe("Ambient video system", () => {
 
   test("attaches a clip's source only as it approaches", async ({ page }) => {
     await page.goto("/");
-    await page.locator("#table").scrollIntoViewIfNeeded();
 
     const seasonal = page.locator("#table video");
+    // The section runs several screens tall, so bringing its top edge into view
+    // is not the same as bringing the clip near the viewport.
+    await seasonal.scrollIntoViewIfNeeded();
+
     await expect
       .poll(async () =>
         seasonal.evaluate((video: HTMLVideoElement) => video.querySelectorAll("source").length),

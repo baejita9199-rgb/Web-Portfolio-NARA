@@ -76,21 +76,21 @@ export const materials: readonly Material[] = [
   {
     index: "01",
     label: "Local timber",
-    note: "Cut from managed stands within the valley and left largely untreated.",
+    note: "Cut from managed stands within the valley and left largely untreated. Oiled only where hands meet it, so those edges darken first.",
   },
   {
     index: "02",
     label: "Hand-finished plaster",
-    note: "Lime and river sand, floated by hand so the wall keeps its own texture.",
+    note: "Lime and river sand, floated by hand so the wall keeps its own texture. It breathes, which is why the rooms dry out between storms.",
   },
   {
     index: "03",
     label: "Natural stone",
-    note: "Collected from the surrounding terrain during the build and laid dry.",
+    note: "Collected from the surrounding terrain during the build and laid dry, without mortar. It stays the coolest surface on the property.",
   },
   {
     index: "04",
     label: "Woven textile",
-    note: "Undyed cotton and hemp from weavers working two valleys away.",
+    note: "Undyed cotton and hemp from weavers working two valleys away. Left uncoloured so it filters the light without tinting it.",
   },
 ];

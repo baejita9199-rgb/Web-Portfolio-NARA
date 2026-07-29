@@ -19,6 +19,33 @@ function isNarrow(page: Page): boolean {
  * matters is that the body's content fits and that the page cannot be dragged
  * sideways, so both are asserted.
  */
+/**
+ * Returns to the top and waits for the page to actually settle there.
+ *
+ * `scroll-behavior: smooth` means a click on an in-page anchor keeps animating
+ * after the assertion that followed it; a single instant `scrollTo` can be
+ * overtaken by that animation. Forcing the position each frame until it stops
+ * moving is the only reliable way to be at the top.
+ */
+async function scrollToTop(page: Page): Promise<void> {
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) => {
+        let previous = -1;
+        const settle = () => {
+          window.scrollTo({ top: 0, behavior: "instant" });
+          if (window.scrollY === 0 && previous === 0) {
+            resolve();
+            return;
+          }
+          previous = window.scrollY;
+          requestAnimationFrame(settle);
+        };
+        settle();
+      }),
+  );
+}
+
 async function horizontalOverflow(page: Page): Promise<number> {
   return page.evaluate(() => {
     const overflow =
@@ -126,7 +153,7 @@ test.describe("Navigation", () => {
     ] as const) {
       // The bar retracts while scrolling down, so it is brought back the same
       // way a visitor would: by returning to the top of the page.
-      await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+      await scrollToTop(page);
       await expect(page.getByRole("banner")).toHaveAttribute(
         "data-hidden",
         "false",

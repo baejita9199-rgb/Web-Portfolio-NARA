@@ -144,6 +144,12 @@
     grid-column: 8 / span 5;
     margin-top: var(--space-3xl);
   }
+
+  /* Square textile detail, tucked back under the left column. */
+  .plate[data-plate="4"] {
+    grid-column: 2 / span 4;
+    margin-top: var(--space-xl);
+  }
 }
 
 @media (min-width: 64rem) {

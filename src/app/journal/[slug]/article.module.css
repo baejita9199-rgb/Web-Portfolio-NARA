@@ -6,7 +6,7 @@
 }
 
 .inner {
-  max-width: 52rem;
+  max-width: 68rem;
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
@@ -15,6 +15,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-m);
+  max-width: 44rem;
   margin-bottom: var(--space-xl);
 }
 
@@ -28,6 +29,15 @@
   color: var(--text-muted);
 }
 
+.metaLink {
+  border-bottom: 1px solid transparent;
+}
+
+.metaLink:hover,
+.metaLink:focus-visible {
+  border-bottom-color: currentColor;
+}
+
 .category {
   color: var(--clay-brown);
 }
@@ -37,60 +47,45 @@
   line-height: 1.04;
 }
 
-.excerpt {
+.standfirst {
   font-family: var(--font-display);
   font-size: var(--step-2);
   font-style: italic;
   line-height: var(--leading-snug);
   color: var(--text-secondary);
-  max-width: 36ch;
+  max-width: 40ch;
 }
 
-.figure {
-  margin: 0 0 var(--space-xl);
+/* The lead plate runs wider than the reading column, to open the piece. */
+.lead {
+  margin: 0 0 var(--space-2xl);
+  padding-inline: var(--gutter);
+  max-width: 84rem;
+  margin-inline: auto;
 }
 
-.figureFrame {
+.leadFrame {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 2;
   overflow: hidden;
   background-color: var(--warm-sand);
 }
 
-.figureImage {
+.leadImage {
   object-fit: cover;
 }
 
-.body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-m);
-  /* The reading measure is the point of this page — held to roughly 66
-     characters regardless of viewport. */
-  max-width: 62ch;
-  font-size: var(--step-1);
-  line-height: var(--leading-loose);
-  color: var(--text-primary);
-}
-
-.body p:first-child::first-letter {
-  font-family: var(--font-display);
-  font-size: 3.1em;
-  line-height: 0.86;
-  float: left;
-  padding-right: 0.1em;
-  padding-top: 0.06em;
-  color: var(--clay-brown);
-}
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
 
 .footer {
-  margin-top: var(--space-2xl);
+  margin-top: var(--space-3xl);
   padding-top: var(--space-l);
   border-top: 1px solid var(--rule);
   display: flex;
   flex-direction: column;
-  gap: var(--space-m);
+  gap: var(--space-2xl);
 }
 
 .disclaimer {
@@ -98,6 +93,61 @@
   line-height: var(--leading-snug);
   color: var(--text-muted);
   max-width: 62ch;
+}
+
+.relatedTitle {
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-m);
+}
+
+.relatedList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-l);
+}
+
+.relatedLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding-top: var(--space-s);
+  border-top: 1px solid var(--rule);
+}
+
+.relatedCategory {
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--clay-brown);
+}
+
+.relatedName {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  line-height: var(--leading-snug);
+  align-self: flex-start;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size var(--duration-base) var(--ease-out-soft);
+}
+
+.relatedLink:hover .relatedName,
+.relatedLink:focus-visible .relatedName {
+  background-size: 100% 1px;
+}
+
+.relatedExcerpt {
+  font-size: var(--step--1);
+  line-height: var(--leading-body);
+  color: var(--text-secondary);
+  max-width: 46ch;
 }
 
 .backLink {
@@ -111,4 +161,17 @@
 .backLink:hover,
 .backLink:focus-visible {
   border-bottom-color: currentColor;
+}
+
+@media (min-width: 48rem) {
+  .relatedList {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gutter);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .relatedName {
+    transition: none;
+  }
 }

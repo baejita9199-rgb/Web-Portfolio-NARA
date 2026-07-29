@@ -11,9 +11,9 @@ import { imageSizes } from "@/lib/media";
 import styles from "./ArchitectureStory.module.css";
 
 /**
- * Three plates of deliberately different proportion — panoramic, square,
- * portrait. Matching ratios are the fastest way to make a page look like a
- * template, so no two are alike.
+ * Four plates of deliberately different proportion — panoramic, square,
+ * portrait, square again at a different scale. Matching ratios are the fastest
+ * way to make a page look like a template, so no two sit at the same size.
  */
 const plates = [
   {
@@ -39,6 +39,14 @@ const plates = [
     ratio: "3 / 4",
     speed: -0.07,
     sizes: imageSizes.half,
+  },
+  {
+    materialIndex: "04",
+    src: naraAssets.images.materialTextile,
+    alt: "The warp and weft of an undyed woven cloth, close up.",
+    ratio: "1 / 1",
+    speed: 0.08,
+    sizes: imageSizes.third,
   },
 ] as const;
 

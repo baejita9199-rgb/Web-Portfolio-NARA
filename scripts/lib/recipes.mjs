@@ -650,6 +650,89 @@ export const imageRecipes = {
   },
   "journal-02": { size: [1920, 1080], recipe: morningValley() },
   "journal-03": { size: [1280, 1600], recipe: table() },
+  "journal-04": { size: [1920, 1080], recipe: courtyard() },
+  "journal-05": { size: [1400, 1050], recipe: forest() },
+  "journal-06": { size: [1280, 1600], recipe: interior(0.36, 0.5, 0.5) },
+
+  /* Additional plates for the room pages and the long-form articles. */
+  "forest-room-03": { size: [1400, 1050], recipe: forest() },
+  "courtyard-suite-03": { size: [1280, 1600], recipe: courtyard() },
+  "hill-residence-03": { size: [1920, 1080], recipe: morningValley() },
+
+  "material-textile": {
+    size: [1200, 1200],
+    recipe: {
+      base: [206, 196, 178],
+      layers: [
+        {
+          type: "linear",
+          angle: 12,
+          stops: [
+            { at: 0, color: [222, 214, 198] },
+            { at: 0.5, color: [198, 186, 166] },
+            { at: 1, color: [166, 152, 132] },
+          ],
+        },
+        // A woven grid: warp and weft as two crossing sets of fine slats.
+        ...slats(40, 0.16, [150, 136, 116]),
+        ...slats(40, 0.12, [176, 164, 146], 0, 1).map((layer) => ({
+          ...layer,
+          // Rotated into the other axis by swapping the rectangle's extents.
+          x0: layer.y0,
+          x1: layer.y1,
+          y0: layer.x0,
+          y1: layer.x1,
+        })),
+        { type: "grain", color: P.charcoal, strength: 0.1, scale: 30, octaves: 3 },
+        sun(0.3, 0.24, 0.22, 0.7),
+        vignette(0.28, 0.48),
+      ],
+    },
+  },
+
+  "detail-window": { size: [1200, 1600], recipe: interior(0.5, 0.62, 0.45) },
+  "detail-lamp": { size: [1400, 1050], recipe: dusk() },
+  "detail-water": {
+    size: [1400, 1050],
+    recipe: {
+      base: [120, 130, 124],
+      layers: [
+        {
+          type: "linear",
+          angle: 90,
+          stops: [
+            { at: 0, color: [150, 158, 150] },
+            { at: 0.45, color: [112, 124, 118] },
+            { at: 1, color: [64, 78, 72] },
+          ],
+        },
+        // Still water: broad horizontal bands with a slow ripple texture.
+        {
+          type: "band",
+          y: 0.62,
+          height: 0.5,
+          color: [186, 192, 186],
+          strength: 0.22,
+          texture: true,
+          scale: 8,
+        },
+        {
+          type: "band",
+          y: 0.4,
+          height: 0.16,
+          color: [226, 228, 222],
+          strength: 0.24,
+          texture: true,
+          scale: 14,
+        },
+        sun(0.62, 0.2, 0.28, 0.6),
+        vignette(0.32, 0.44),
+      ],
+    },
+  },
+  "terrace-morning": { size: [2400, 1000], recipe: morningValley() },
+  "kitchen-hands": { size: [1400, 1050], recipe: table() },
+  "garden-morning": { size: [1200, 1600], recipe: forest() },
 
   "poster-morning-curtain": { size: [1400, 1050], recipe: interior(0.58, 0.55, 0.7) },
   "poster-seasonal-table": { size: [1080, 1350], recipe: table() },

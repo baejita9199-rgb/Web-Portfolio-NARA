@@ -123,15 +123,24 @@ test.describe("Journal route", () => {
   test("opens a journal entry from the home page list", async ({ page }) => {
     await page.goto("/");
     const link = page.getByRole("link", {
-      name: /on building with quiet materials/i,
+      name: /walking the ridge before light/i,
     });
     await link.scrollIntoViewIfNeeded();
     await link.click();
 
-    await expect(page).toHaveURL(/\/journal\/on-building-with-quiet-materials$/);
+    await expect(page).toHaveURL(/\/journal\/walking-the-ridge-before-light$/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "On Building with Quiet Materials",
+      "Walking the Ridge Before Light",
     );
+  });
+
+  test("previews only the three most recent entries", async ({ page }) => {
+    await page.goto("/");
+    const section = page.locator("#journal");
+    await section.scrollIntoViewIfNeeded();
+
+    await expect(section.locator("ol > li")).toHaveCount(3);
+    await expect(section).toContainText(/6 entries and counting/i);
   });
 
   test("lists every entry on the journal index", async ({ page }) => {
@@ -139,6 +148,9 @@ test.describe("Journal route", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
     for (const title of [
+      "Walking the Ridge Before Light",
+      "The Courtyard at Four O'Clock",
+      "What the Weavers Know",
       "On Building with Quiet Materials",
       "The First Rain",
       "A Morning Table",

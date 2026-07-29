@@ -3,16 +3,17 @@ import { EditorialImage } from "@/components/media/EditorialImage";
 import { ImageReveal, Reveal } from "@/components/motion/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { assetDimensions, naraAssets } from "@/content/assets";
-import { seasonalMenu } from "@/content/day";
+import { included, seasonalMenu, tableNotes } from "@/content/stay";
 import { imageSizes } from "@/lib/media";
 import styles from "./SeasonalTable.module.css";
 
 /**
  * Section 06 — Seasonal Table.
  *
- * The deep-green surface of the page. One short clip of steam sits beside two
+ * The deep-green surface of the page. One short clip of steam sits beside the
  * stills; the video is well below the fold and therefore never downloads until
- * the section is nearly on screen.
+ * the section is nearly on screen. The menu spans the year rather than a single
+ * day, because a seasonal claim only means something if the season is visible.
  */
 export function SeasonalTable() {
   return (
@@ -66,23 +67,49 @@ export function SeasonalTable() {
                 caption="Whatever the garden gave up that morning."
               />
             </ImageReveal>
+
+            <Reveal splitChildren as="ul" className={styles.notes}>
+              {tableNotes.map((note) => (
+                <li key={note}>{note}</li>
+              ))}
+            </Reveal>
           </div>
 
           <div className={styles.menuColumn}>
             <Reveal>
               <p className={styles.menuIntro}>
-                There is no fixed menu. What follows is a typical day, written
-                down after the fact.
+                There is no fixed menu. What follows is what the table tends to
+                look like as the year turns.
               </p>
             </Reveal>
 
             <Reveal splitChildren as="dl" className={styles.menu}>
-              {seasonalMenu.map((entry) => (
-                <div key={entry.time} className={styles.menuRow}>
-                  <dt className={styles.menuTime}>{entry.time}</dt>
-                  <dd className={styles.menuDish}>{entry.dish}</dd>
+              {seasonalMenu.map((course) => (
+                <div
+                  key={`${course.time}-${course.season}`}
+                  className={styles.menuRow}
+                >
+                  <dt className={styles.menuTime}>
+                    <span>{course.time}</span>
+                    <span className={styles.menuSeason}>{course.season}</span>
+                  </dt>
+                  <dd className={styles.menuDish}>
+                    <span>{course.dish}</span>
+                    {course.note ? (
+                      <span className={styles.menuNote}>{course.note}</span>
+                    ) : null}
+                  </dd>
                 </div>
               ))}
+            </Reveal>
+
+            <Reveal className={styles.includedBlock}>
+              <p className={styles.includedTitle}>Included in a stay</p>
+              <ul role="list" className={styles.includedList}>
+                {included.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </Reveal>
 
             <ImageReveal className={styles.tablePlate}>

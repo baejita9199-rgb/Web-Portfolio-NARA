@@ -46,10 +46,11 @@ src/
   app/                     Routes, metadata, robots, sitemap, design tokens
     globals.css            Palette, fluid type scale, spacing, motion, focus
     page.tsx               The nine-section narrative
-    journal/               Index + article routes (statically generated)
-    rooms/[slug]/          Room detail routes (statically generated)
+    journal/               Index + six article routes (statically generated)
+    rooms/[slug]/          Three room routes (statically generated)
   components/
     booking/               Concept reservation panel + provider
+    editorial/             ArticleBody — renders typed article blocks
     layout/                SiteNavigation, Footer
     media/                 AmbientVideo, EditorialImage, ParallaxMedia,
                            SplitMediaText, FullBleedMedia, HorizontalGallery,
@@ -58,6 +59,8 @@ src/
     sections/              One component per numbered section
     ui/                    Action buttons and links, SectionLabel
   content/                 The entire content model — every string lives here
+    journal.entries.ts     Six long-form articles as typed blocks
+    stay.ts                Practical detail: arrival, the day's rhythm, menu
   hooks/                   useReducedMotion, useMediaQuery, useIntersectionVideo,
                            useParallax, useScrollDirection, useViewportSize,
                            useDocumentVisibility, useFocusTrap, useBodyScrollLock
@@ -76,8 +79,26 @@ intercepted, wrapped or smoothed.
 ### Content model
 
 Nothing is hard-coded in a component. `src/content` holds flat, serialisable,
-slug-addressable data (`Room`, `JournalEntry`, `Experience`, `DayChapter`) that
-could be swapped for a CMS without touching the components that render it.
+slug-addressable data (`Room`, `JournalEntry`, `Experience`, `DayChapter`,
+`StayDetail`, `MenuCourse`) that could be swapped for a CMS without touching the
+components that render it.
+
+Articles are modelled as a sequence of typed blocks rather than a flat string
+array:
+
+```ts
+type ArticleBlock =
+  | { kind: "paragraph"; text: string }
+  | { kind: "subhead"; text: string }
+  | { kind: "quote"; text: string; attribution?: string }
+  | { kind: "figure"; image: ImageAsset; caption: string }
+  | { kind: "list"; title?: string; items: string[] };
+```
+
+Long-form editorial needs subheads, pull quotes and captioned plates to hold a
+reader. Modelling them explicitly keeps that structure in the content layer
+rather than smuggling markup into prose, and lets `ArticleBody` give figures and
+quotes a wider column than the 62-character reading measure.
 
 ---
 
@@ -173,14 +194,17 @@ That single flag adds an `<source type="video/mp4">` after each WebM entry.
 
 ## Testing
 
-- **Unit (Vitest + Testing Library)** — room data mapping, asset source
+- **Unit (Vitest + Testing Library)** — room data mapping and detail content,
+  article structure and reading times, related-entry selection, asset source
   selection, video visibility behaviour, reduced-motion behaviour, navigation
   mapping, booking validation, date validation, concept submission.
 - **End-to-end (Playwright)** — run against `desktop-chromium` (1440×900) and
   `mobile-chromium` (412×915): hero and wordmark, poster fallback, scroll
   reveals, keyboard-operable gallery, no horizontal overflow, reduced motion
   without autoplay, keyboard-operable booking modal, no real submission,
-  off-screen clips paused, navigation anchors, and the footer disclaimer.
+  off-screen clips paused, navigation anchors, the footer disclaimer, and the
+  long-form journal and room pages (structure, reading measure, related reading,
+  structured data, and the absence of lodging markup).
 
 ```bash
 npm run build && npm run test:e2e

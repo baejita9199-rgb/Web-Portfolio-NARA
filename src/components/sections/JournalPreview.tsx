@@ -3,7 +3,11 @@ import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { ActionLink } from "@/components/ui/Action";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { formatJournalDate, getJournalEntriesByDate } from "@/content/journal";
+import {
+  formatJournalDate,
+  getFeaturedJournalEntries,
+  journalEntries,
+} from "@/content/journal";
 import { imageSizes } from "@/lib/media";
 import styles from "./JournalPreview.module.css";
 
@@ -15,7 +19,8 @@ import styles from "./JournalPreview.module.css";
  * journal rather than a decorative stand-in.
  */
 export function JournalPreview() {
-  const entries = getJournalEntriesByDate();
+  // The home page previews the three most recent; the rest live on /journal.
+  const entries = getFeaturedJournalEntries(3);
 
   return (
     <section
@@ -81,6 +86,9 @@ export function JournalPreview() {
           <ActionLink href="/journal" variant="quiet">
             Read the journal
           </ActionLink>
+          <p className={styles.footerCount}>
+            {journalEntries.length} entries and counting
+          </p>
         </div>
       </div>
     </section>

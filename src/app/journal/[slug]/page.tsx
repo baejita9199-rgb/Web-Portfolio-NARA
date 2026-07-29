@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArticleBody } from "@/components/editorial/ArticleBody";
 import {
   formatJournalDate,
   getJournalEntryBySlug,
   getJournalSlugs,
+  getRelatedJournalEntries,
 } from "@/content/journal";
 import { site } from "@/content/site";
 import { imageSizes } from "@/lib/media";
@@ -15,7 +17,7 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-/** Every entry is known at build time, so all three pages are fully static. */
+/** Every entry is known at build time, so all six pages are fully static. */
 export function generateStaticParams() {
   return getJournalSlugs().map((slug) => ({ slug }));
 }
@@ -47,6 +49,8 @@ export default async function JournalEntryPage({ params }: PageProps) {
   const entry = getJournalEntryBySlug(slug);
   if (!entry) notFound();
 
+  const related = getRelatedJournalEntries(entry.slug);
+
   /**
    * Article structured data is safe here because the route genuinely exists and
    * describes a piece of writing. Hotel/LodgingBusiness markup is deliberately
@@ -77,39 +81,70 @@ export default async function JournalEntryPage({ params }: PageProps) {
       <div className={styles.inner}>
         <header className={styles.header}>
           <p className={styles.meta}>
+            <Link href="/journal" className={styles.metaLink}>
+              Journal
+            </Link>
+            <span className={styles.category}>{entry.category}</span>
             <time dateTime={entry.publishedAt}>
               {formatJournalDate(entry.publishedAt)}
             </time>
-            <span className={styles.category}>{entry.category}</span>
             <span>{entry.readingTime}</span>
           </p>
           <h1 className={styles.title}>{entry.title}</h1>
-          <p className={styles.excerpt}>{entry.excerpt}</p>
+          <p className={styles.standfirst}>{entry.standfirst}</p>
         </header>
+      </div>
 
-        {entry.image ? (
-          <figure className={styles.figure}>
-            <div className={styles.figureFrame}>
-              <Image
-                src={entry.image.src}
-                alt={entry.image.alt}
-                fill
-                priority
-                sizes={imageSizes.full}
-                className={styles.figureImage}
-              />
-            </div>
-          </figure>
-        ) : null}
+      {entry.image ? (
+        <figure className={styles.lead}>
+          <div
+            className={styles.leadFrame}
+            style={{
+              aspectRatio: `${entry.image.width} / ${entry.image.height}`,
+            }}
+          >
+            <Image
+              src={entry.image.src}
+              alt={entry.image.alt}
+              fill
+              priority
+              sizes={imageSizes.full}
+              className={styles.leadImage}
+            />
+          </div>
+        </figure>
+      ) : null}
 
-        <div className={styles.body}>
-          {entry.body.map((paragraph) => (
-            <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-          ))}
-        </div>
+      <div className={styles.inner}>
+        <ArticleBody blocks={entry.body} />
 
         <footer className={styles.footer}>
           <p className={styles.disclaimer}>{site.disclaimer}</p>
+
+          {related.length > 0 ? (
+            <nav className={styles.related} aria-label="More from the journal">
+              <p className={styles.relatedTitle}>More from the journal</p>
+              <ul role="list" className={styles.relatedList}>
+                {related.map((other) => (
+                  <li key={other.slug}>
+                    <Link
+                      href={`/journal/${other.slug}`}
+                      className={styles.relatedLink}
+                    >
+                      <span className={styles.relatedCategory}>
+                        {other.category}
+                      </span>
+                      <span className={styles.relatedName}>{other.title}</span>
+                      <span className={styles.relatedExcerpt}>
+                        {other.excerpt}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ) : null}
+
           <p className={styles.back}>
             <Link href="/journal" className={styles.backLink}>
               <span aria-hidden="true">&#8592;</span> All journal entries

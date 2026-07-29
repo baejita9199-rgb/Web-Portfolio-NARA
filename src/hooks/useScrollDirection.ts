@@ -30,6 +30,7 @@ export function useScrollDirection(
     isAtTop: true,
   });
   const lastY = useRef(0);
+  const directionRef = useRef<ScrollDirection>("up");
   const ticking = useRef(false);
 
   useEffect(() => {
@@ -42,17 +43,24 @@ export function useScrollDirection(
       const isAtTop = y <= topThreshold;
       const movement = y - lastY.current;
 
-      setState((previous) => {
-        let direction = previous.direction;
-        if (Math.abs(movement) > delta) {
-          direction = movement > 0 ? "down" : "up";
-          lastY.current = y;
-        }
-        if (direction === previous.direction && isAtTop === previous.isAtTop) {
-          return previous;
-        }
-        return { direction, isAtTop };
-      });
+      // Resolved before `setState` rather than inside the updater: an updater
+      // must stay pure, and React is free to call it more than once.
+      let direction = directionRef.current;
+      if (Math.abs(movement) > delta) {
+        direction = movement > 0 ? "down" : "up";
+        lastY.current = y;
+      }
+      // Being at the top always reveals the bar, whichever way the last
+      // gesture went — otherwise an interrupted smooth scroll can leave it
+      // retracted at the very top of the page.
+      if (isAtTop) direction = "up";
+      directionRef.current = direction;
+
+      setState((previous) =>
+        direction === previous.direction && isAtTop === previous.isAtTop
+          ? previous
+          : { direction, isAtTop },
+      );
     };
 
     const onScroll = () => {

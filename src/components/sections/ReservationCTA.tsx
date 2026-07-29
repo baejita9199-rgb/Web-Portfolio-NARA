@@ -8,15 +8,17 @@ import { ActionButton } from "@/components/ui/Action";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { naraAssets } from "@/content/assets";
 import { site } from "@/content/site";
+import { arrivalDetails, houseRhythm } from "@/content/stay";
 import { formatConceptRate } from "@/lib/booking";
 import styles from "./ReservationCTA.module.css";
 
 /**
  * Section 09 — Reservation.
  *
- * The closing invitation. It is written as a welcome rather than a conversion
- * panel: no countdown, no scarcity, no urgency — and the fictional nature of
- * the brand is stated in the section itself, not only in the footer.
+ * The closing invitation, written as a welcome rather than a conversion panel:
+ * no countdown, no scarcity, no urgency. The practical detail beneath it is
+ * deliberately plain — a site that only ever describes atmosphere is not much
+ * use to somebody actually deciding whether to come.
  */
 export function ReservationCTA() {
   const { open: openBooking } = useBooking();
@@ -69,12 +71,6 @@ export function ReservationCTA() {
             </ActionButton>
           </Reveal>
 
-          <Reveal splitChildren as="ul" className={styles.notes}>
-            {site.stay.notes.map((note) => (
-              <li key={note}>{note}</li>
-            ))}
-          </Reveal>
-
           <Reveal className={styles.rate}>
             <p>
               <span className={styles.rateValue}>
@@ -85,10 +81,46 @@ export function ReservationCTA() {
               </span>
             </p>
           </Reveal>
-
-          <p className={styles.disclaimer}>{site.bookingDisclaimer}</p>
         </div>
       </FullBleedMedia>
+
+      <div className={styles.practical}>
+        <div className={styles.practicalInner}>
+          <div className={styles.practicalColumn}>
+            <h3 className={styles.practicalTitle}>Coming here</h3>
+            <dl className={styles.detailList}>
+              {arrivalDetails.map((detail) => (
+                <div key={detail.label} className={styles.detail}>
+                  <dt>{detail.label}</dt>
+                  <dd>
+                    <span>{detail.value}</span>
+                    {detail.note ? (
+                      <span className={styles.detailNote}>{detail.note}</span>
+                    ) : null}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className={styles.practicalColumn}>
+            <h3 className={styles.practicalTitle}>The shape of a day</h3>
+            <dl className={styles.rhythmList}>
+              {houseRhythm.map((moment) => (
+                <div key={moment.label} className={styles.rhythm}>
+                  <dt>{moment.label}</dt>
+                  <dd>{moment.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className={styles.rhythmNote}>
+              None of it is compulsory. Most guests ignore at least half.
+            </p>
+          </div>
+        </div>
+
+        <p className={styles.disclaimer}>{site.bookingDisclaimer}</p>
+      </div>
     </section>
   );
 }

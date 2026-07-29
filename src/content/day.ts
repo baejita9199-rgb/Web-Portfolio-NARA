@@ -76,14 +76,3 @@ export const dayChapters: readonly DayChapter[] = [
     },
   },
 ];
-
-export const seasonalMenu = [
-  {
-    time: "Morning",
-    dish: "Rice porridge, garden herbs, preserved vegetables and local tea.",
-  },
-  {
-    time: "Evening",
-    dish: "Seasonal vegetables, charcoal-grilled produce and northern-style shared dishes.",
-  },
-] as const;

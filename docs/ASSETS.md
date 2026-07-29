@@ -61,12 +61,16 @@ a file.**
 | `material-timber.webp` | 1920×1080 | 16:9 | The long elevation, timber screens along the terrace |
 | `material-clay.webp` | 1200×1200 | 1:1 | Detail: hand-floated lime plaster in raking light |
 | `material-stone.webp` | 1200×1600 | 3:4 | A deep opening cut through stone, light on the sill |
+| `material-textile.webp` | 1200×1200 | 1:1 | Warp and weft of undyed woven cloth, close up |
 | `forest-room-01.webp` | 1280×1600 | 4:5 | Forest Room — bed, garden beyond, morning light |
 | `forest-room-02.webp` | 1400×1050 | 4:3 | Forest Room detail — linen, low window |
+| `forest-room-03.webp` | 1400×1050 | 4:3 | The garden immediately outside the room |
 | `courtyard-suite-01.webp` | 1280×1600 | 4:5 | Courtyard Suite — pale stone, open to the sky |
 | `courtyard-suite-02.webp` | 1400×1050 | 4:3 | Afternoon shadow across a stone courtyard floor |
+| `courtyard-suite-03.webp` | 1200×1600 | 3:4 | The courtyard from the sitting room, open to the sky |
 | `hill-residence-01.webp` | 1280×1600 | 4:5 | Hill Residence — terrace over layered ridgelines at dusk |
 | `hill-residence-02.webp` | 1400×1050 | 4:3 | Low table and two chairs on a covered terrace |
+| `hill-residence-03.webp` | 1920×1080 | 16:9 | The valley with cloud sitting below the ridgeline |
 | `breakfast.webp` | 1400×1050 | 4:3 | A shared table laid simply, warm light |
 | `seasonal-table.webp` | 1400×1050 | 4:3 | Hands setting a dish onto a long timber table |
 | `seasonal-ingredients.webp` | 1200×1200 | 1:1 | Garden vegetables and herbs before cooking |
@@ -76,11 +80,20 @@ a file.**
 | `garden-session.webp` | 1400×1050 | 4:3 | A hand gathering herbs from a raised bed |
 | `reading-picnic.webp` | 1400×1050 | 4:3 | Blanket and open book in dappled shade |
 | `bicycle-route.webp` | 1400×1050 | 4:3 | Empty rural road curving between fields at first light |
+| `detail-window.webp` | 1200×1600 | 3:4 | The deep timber window seat, light across the sill |
+| `detail-lamp.webp` | 1400×1050 | 4:3 | One lamp lit on the terrace as the daylight goes |
+| `detail-water.webp` | 1400×1050 | 4:3 | Still water in the courtyard drain after rain |
+| `terrace-morning.webp` | 2400×1000 | 12:5 | Panoramic: cloud draining out of the side valleys |
+| `kitchen-hands.webp` | 1400×1050 | 4:3 | Hands finishing a dish on a worn timber worktop |
+| `garden-morning.webp` | 1200×1600 | 3:4 | The garden early, before anything has been picked |
 | `evening-room.webp` | 1920×1080 | 16:9 | A room at night, one low lamp, dark garden beyond |
 | `surroundings.webp` | 1920×1080 | 16:9 | Layered ridgelines fading into morning haze |
 | `journal-01.webp` | 1400×1050 | 4:3 | Late light raking across plaster |
 | `journal-02.webp` | 1920×1080 | 16:9 | Low cloud moving through a forested valley after rain |
 | `journal-03.webp` | 1280×1600 | 4:5 | Breakfast setting on a worn timber table |
+| `journal-04.webp` | 1920×1080 | 16:9 | The stone courtyard, open to the sky |
+| `journal-05.webp` | 1400×1050 | 4:3 | Undyed cloth on a wooden frame, workshop light |
+| `journal-06.webp` | 1280×1600 | 4:5 | A path rising into forest in the blue light before dawn |
 | `poster-morning-curtain.webp` | 1400×1050 | 4:3 | Poster for the morning-curtain clip |
 | `poster-seasonal-table.webp` | 1080×1350 | 4:5 | Poster for the seasonal-table clip |
 | `poster-evening-light.webp` | 1920×1080 | 16:9 | Poster for the evening-light clip |
