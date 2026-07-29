@@ -1,0 +1,128 @@
+.section {
+  background-color: var(--rice-paper);
+  padding-block: var(--space-3xl);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  margin-bottom: var(--space-2xl);
+}
+
+.title {
+  font-size: var(--step-5);
+  line-height: 1.06;
+  max-width: 20ch;
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+}
+
+.chapter {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.time {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-s);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--rule);
+}
+
+.timeIndex {
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  color: var(--clay-brown);
+  font-variant-numeric: tabular-nums;
+}
+
+.timeLabel {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  line-height: 1;
+}
+
+.contentColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  min-width: 0;
+}
+
+.chapterTitle {
+  font-size: var(--step-2);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  max-width: var(--measure);
+}
+
+.line {
+  font-size: var(--step-1);
+  line-height: var(--leading-snug);
+}
+
+.media {
+  margin-top: var(--space-s);
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop — the hour parks beside its passage
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 64rem) {
+  .title {
+    font-size: var(--step-6);
+  }
+
+  .chapter {
+    grid-template-columns: minmax(0, 0.4fr) minmax(0, 1fr);
+    gap: var(--gutter);
+    align-items: start;
+  }
+
+  .timeColumn {
+    position: sticky;
+    /* Clears the fixed navigation with a little air beneath it. */
+    top: calc(var(--nav-height) + var(--space-l));
+  }
+
+  /* Each chapter is offset a little further into the column than the last, so
+     the timeline steps rather than stacks. */
+  .chapter:nth-child(even) .contentColumn {
+    padding-left: var(--space-2xl);
+  }
+
+  .chapter:nth-child(even) .media {
+    max-width: 78%;
+  }
+
+  .chapter:nth-child(odd) .media {
+    max-width: 88%;
+    margin-left: auto;
+  }
+}

@@ -1,0 +1,158 @@
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  /* Generous vertical padding keeps every CTA above the 44px touch target
+     minimum without needing a separate mobile rule. */
+  padding: 0.95rem var(--space-m);
+  min-height: 2.9rem;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  /* A hairline radius only — enough to soften the corner, not enough to read
+     as a pill. */
+  border-radius: 2px;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  transition:
+    color var(--duration-base) var(--ease-out-soft),
+    border-color var(--duration-base) var(--ease-out-soft);
+}
+
+/* The hover state is a colour sweep from below rather than a shadow or a lift —
+   quieter, and it does not move the layout. */
+.action::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform var(--duration-base) var(--ease-out-soft);
+}
+
+.action:hover::before,
+.action:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Primary --------------------------------------------------------------- */
+
+.primary {
+  background-color: var(--charcoal);
+  color: var(--soft-white);
+}
+
+.primary::before {
+  background-color: var(--forest-green);
+}
+
+.primary.dark {
+  background-color: var(--soft-white);
+  color: var(--charcoal);
+}
+
+.primary.dark::before {
+  background-color: var(--warm-sand);
+}
+
+/* --- Secondary ------------------------------------------------------------- */
+
+.secondary {
+  border-color: var(--sand-veil-strong);
+  color: var(--text-primary);
+}
+
+.secondary::before {
+  background-color: var(--warm-sand);
+}
+
+.secondary:hover,
+.secondary:focus-visible {
+  border-color: transparent;
+}
+
+.secondary.dark {
+  border-color: var(--light-veil-soft);
+  color: var(--text-inverse);
+}
+
+.secondary.dark::before {
+  background-color: rgba(248, 246, 240, 0.14);
+}
+
+.secondary.dark:hover,
+.secondary.dark:focus-visible {
+  border-color: var(--light-veil);
+  color: var(--text-inverse);
+}
+
+/* --- Quiet ----------------------------------------------------------------- */
+
+.quiet {
+  padding-inline: 0;
+  min-height: 0;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--sand-veil-strong);
+  border-radius: 0;
+  padding-bottom: var(--space-3xs);
+  overflow: visible;
+}
+
+.quiet::before {
+  display: none;
+}
+
+.quiet.dark {
+  color: var(--text-inverse);
+  border-bottom-color: var(--light-veil-soft);
+}
+
+.quiet:hover,
+.quiet:focus-visible {
+  border-bottom-color: currentColor;
+}
+
+/* --- Inline text link ------------------------------------------------------ */
+
+.textLink {
+  position: relative;
+  display: inline;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size var(--duration-base) var(--ease-out-soft);
+  padding-bottom: 0.08em;
+}
+
+.textLink:hover,
+.textLink:focus-visible {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action::before {
+    transition: none;
+  }
+
+  .textLink {
+    transition: none;
+    background-size: 100% 1px;
+    /* Without motion the affordance has to be present rather than revealed, so
+       the underline is drawn and simply brightens on interaction. */
+    opacity: 0.92;
+  }
+
+  .textLink:hover,
+  .textLink:focus-visible {
+    opacity: 1;
+  }
+}

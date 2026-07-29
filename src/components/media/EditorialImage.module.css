@@ -1,0 +1,43 @@
+.wrapper {
+  margin: 0;
+  display: block;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* A warm holding colour rather than grey, so a slow connection still reads as
+     part of the palette rather than as a missing asset. */
+  background-color: var(--warm-sand);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.caption {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  margin-top: var(--space-s);
+  font-size: var(--step--1);
+  line-height: var(--leading-snug);
+  color: var(--text-muted);
+  max-width: 42ch;
+}
+
+.plate {
+  flex-shrink: 0;
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--clay-brown);
+  /* Aligns the number with the x-height of the caption beside it. */
+  transform: translateY(-0.05em);
+}
+
+.captionText {
+  display: block;
+  text-wrap: pretty;
+}

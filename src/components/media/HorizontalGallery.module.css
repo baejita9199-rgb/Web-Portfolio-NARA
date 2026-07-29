@@ -1,0 +1,106 @@
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  /* The track is the only thing that scrolls sideways; it is contained here so
+     the document itself never gains a horizontal scrollbar. */
+  max-width: 100%;
+}
+
+.track {
+  display: flex;
+  gap: var(--gutter);
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* `proximity`, not `mandatory` — a visitor can rest between two plates
+     instead of being pulled to the nearest one. */
+  scroll-snap-type: x proximity;
+  scroll-behavior: auto;
+  padding-inline-start: var(--gutter);
+  /*
+   * Trailing space sized so the *last* plate can still scroll all the way to
+   * the leading edge. Without it the track runs out of travel early, the final
+   * plates share one scroll position, and the counter jumps 01 → 03 because the
+   * intermediate one is literally unreachable.
+   *
+   * `--gallery-item-width` is published by the consuming section.
+   */
+  padding-inline-end: max(
+    var(--gutter),
+    calc(100% - var(--gallery-item-width, 0px) - var(--gutter))
+  );
+  /* Snap points land on the leading edge of a plate, past the track's own
+     padding — the same alignment the active-index measurement uses. */
+  scroll-padding-inline-start: var(--gutter);
+  padding-block: var(--space-2xs) var(--space-s);
+  /* Room for the focus ring, which would otherwise be clipped by the scroller. */
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.track[data-can-drag="true"] {
+  cursor: grab;
+}
+
+.track[data-dragging="true"] {
+  cursor: grabbing;
+  /* Suppresses text selection and snap fighting while a drag is in progress. */
+  user-select: none;
+  scroll-snap-type: none;
+}
+
+.track:focus-visible {
+  outline: 2px solid var(--clay-brown);
+  outline-offset: -4px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  padding-inline: var(--gutter);
+}
+
+.slot {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.control {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--sand-veil-strong);
+  border-radius: 50%;
+  color: var(--text-primary);
+  font-size: var(--step-0);
+  transition:
+    background-color var(--duration-fast) var(--ease-out-soft),
+    border-color var(--duration-fast) var(--ease-out-soft),
+    color var(--duration-fast) var(--ease-out-soft);
+}
+
+.control:hover:not(:disabled) {
+  background-color: var(--warm-sand);
+  border-color: transparent;
+}
+
+.control:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+@media (min-width: 64rem) {
+  .control {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+}

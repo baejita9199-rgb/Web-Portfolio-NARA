@@ -1,0 +1,183 @@
+.section {
+  background-color: var(--rice-paper);
+}
+
+.bleedImage {
+  object-fit: cover;
+}
+
+.overlay {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  max-width: 40rem;
+}
+
+.overlayTitle {
+  font-size: var(--step-6);
+  line-height: 1;
+  color: var(--soft-white);
+}
+
+.overlayLines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-m);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: rgba(248, 246, 240, 0.82);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  padding-block: var(--space-3xl);
+}
+
+.listLayout {
+  display: grid;
+  gap: var(--space-2xl) var(--gutter);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2xs) var(--space-m);
+  padding-block: var(--space-l);
+  border-bottom: 1px solid var(--rule);
+  transition: background-color var(--duration-base) var(--ease-out-soft);
+}
+
+.rowIndex {
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  color: var(--clay-brown);
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.5em;
+}
+
+.rowBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  min-width: 0;
+}
+
+.rowTitle {
+  font-size: var(--step-3);
+  line-height: var(--leading-snug);
+}
+
+.rowDescription {
+  font-size: var(--step--1);
+  line-height: var(--leading-body);
+  color: var(--text-secondary);
+  max-width: 46ch;
+}
+
+.rowSeason {
+  grid-column: 2;
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.rowImage {
+  position: relative;
+  grid-column: 2;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin-top: var(--space-s);
+  overflow: hidden;
+  background-color: var(--warm-sand);
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* The shared preview only exists where a pointer can drive it. */
+.preview {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .row {
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+  }
+
+  .rowSeason {
+    grid-column: 3;
+    text-align: right;
+  }
+
+  .rowImage {
+    grid-column: 2 / -1;
+    max-width: 22rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .listLayout {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    align-items: start;
+  }
+
+  /* Replaced by the sticky preview beside the list. */
+  .rowImage {
+    display: none;
+  }
+
+  .row[data-active="true"] {
+    background-color: rgba(215, 203, 185, 0.3);
+  }
+
+  .preview {
+    display: block;
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-l));
+  }
+
+  .previewFrame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background-color: var(--warm-sand);
+  }
+
+  .previewImage {
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-out-soft);
+  }
+
+  .previewImage[data-active="true"] {
+    opacity: 1;
+  }
+
+  .previewCaption {
+    margin-top: var(--space-s);
+    font-size: var(--step--2);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .previewImage,
+  .row {
+    transition: none;
+  }
+}

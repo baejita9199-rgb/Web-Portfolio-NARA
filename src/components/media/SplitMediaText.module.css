@@ -1,0 +1,66 @@
+.split {
+  display: grid;
+  gap: var(--space-xl) var(--gutter);
+  align-items: start;
+}
+
+/* Mobile: one column, text first, no offsets, no overlap. */
+.text,
+.media {
+  min-width: 0;
+}
+
+@media (min-width: 48rem) {
+  .split {
+    grid-template-columns: 1fr 1fr;
+    align-items: var(--split-align, start);
+  }
+
+  .split[data-align="center"] {
+    --split-align: center;
+  }
+
+  .split[data-align="end"] {
+    --split-align: end;
+  }
+
+  .split[data-balance="media-lead"] {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+
+  .split[data-balance="text-lead"] {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+
+  /* Placing the media in column 1 rather than reversing the DOM keeps the
+     reading and tab order text-first on every viewport. */
+  .split[data-media-side="left"] .media {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .split[data-media-side="left"] .text {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .split[data-media-side="left"][data-balance="media-lead"] {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+
+  .split[data-media-side="left"][data-balance="text-lead"] {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+}
+
+/* The vertical offset only appears once there is room for it to read as
+   intention rather than as a broken grid. */
+@media (min-width: 64rem) {
+  .split[data-offset="true"] .media {
+    margin-top: var(--space-2xl);
+  }
+
+  .split[data-offset="true"][data-align="center"] .media {
+    margin-top: 0;
+  }
+}

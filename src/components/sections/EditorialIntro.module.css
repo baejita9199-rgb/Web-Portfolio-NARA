@@ -1,0 +1,101 @@
+.section {
+  position: relative;
+  background-color: var(--rice-paper);
+  padding-block: var(--space-3xl);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.textColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.title {
+  font-size: var(--step-5);
+  line-height: 1.06;
+  max-width: 16ch;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.line {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: var(--leading-snug);
+  color: var(--text-secondary);
+}
+
+/* The list is set as a stanza, so the first line carries a small indent that
+   the rest hang from. */
+.line:first-child {
+  color: var(--text-primary);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  max-width: var(--measure);
+  color: var(--text-secondary);
+}
+
+.plate {
+  margin-top: var(--space-m);
+}
+
+.mediaColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.captionParallax {
+  background: none;
+  overflow: visible;
+}
+
+.caption {
+  margin: 0;
+}
+
+.caption figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--rule);
+}
+
+.captionBrand {
+  color: var(--clay-brown);
+}
+
+@media (min-width: 64rem) {
+  .title {
+    font-size: var(--step-6);
+  }
+
+  /* Lets the tall plate rise past the top of the text column, so the two sides
+     never start on the same baseline. */
+  .mediaColumn {
+    margin-top: calc(var(--space-2xl) * -1);
+  }
+}

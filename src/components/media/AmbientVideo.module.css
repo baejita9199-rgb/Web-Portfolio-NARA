@@ -1,0 +1,59 @@
+.frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--warm-sand);
+  isolation: isolate;
+}
+
+/*
+ * The poster sits beneath the clip rather than in the `poster` attribute so it
+ * is delivered through next/image as a responsive, correctly-sized source. It
+ * is also the permanent fallback: if the video errors, is refused autoplay, or
+ * is suppressed for reduced motion, this is simply what remains visible.
+ */
+.poster {
+  object-fit: cover;
+  z-index: 0;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity var(--duration-veil) var(--ease-out-soft);
+  will-change: opacity;
+}
+
+/* Revealed only once the first frames are actually decoding, so the crossfade
+   from still to motion never shows an empty black box. */
+.video[data-playing="true"] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video {
+    transition: none;
+  }
+}
+
+/* A very quiet warm wash keeps footage inside the palette and stops any clip
+   reading as colder or bluer than the surrounding stills. */
+.grade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(36, 36, 33, 0.06),
+    rgba(36, 36, 33, 0) 32%,
+    rgba(36, 36, 33, 0) 68%,
+    rgba(36, 36, 33, 0.16)
+  );
+}

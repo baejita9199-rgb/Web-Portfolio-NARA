@@ -1,0 +1,40 @@
+.reveal {
+  /* No hidden state by default. The starting styles below only apply once the
+     component has confirmed from JavaScript that it can animate, so content is
+     visible for search engines, for no-JS visitors and under reduced motion. */
+  display: block;
+}
+
+.reveal[data-reveal-ready="true"].text {
+  opacity: 0;
+}
+
+.reveal[data-reveal-ready="true"].text[data-reveal-split="true"] {
+  opacity: 1;
+}
+
+.reveal[data-reveal-ready="true"].text[data-reveal-split="true"] > * {
+  opacity: 0;
+}
+
+.reveal[data-reveal-ready="true"].mask {
+  clip-path: inset(100% 0% 0% 0%);
+}
+
+.rule {
+  transform-origin: left center;
+}
+
+.reveal[data-reveal-ready="true"].rule {
+  transform: scaleX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal[data-reveal-ready="true"],
+  .reveal[data-reveal-ready="true"] > * {
+    opacity: 1 !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+}

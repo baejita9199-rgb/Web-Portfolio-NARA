@@ -1,0 +1,123 @@
+.section {
+  background-color: var(--forest-green);
+  color: var(--text-inverse);
+  padding-block: var(--space-3xl);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  max-width: 46rem;
+  margin-bottom: var(--space-2xl);
+}
+
+.title {
+  font-size: var(--step-6);
+  line-height: 1.02;
+  color: var(--soft-white);
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: var(--leading-body);
+  color: var(--text-inverse-muted);
+  max-width: var(--measure-wide);
+}
+
+.body {
+  display: grid;
+  gap: var(--space-2xl) var(--gutter);
+}
+
+.mediaColumn,
+.menuColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  min-width: 0;
+}
+
+.videoFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background-color: rgba(248, 246, 240, 0.06);
+}
+
+.menuIntro {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-style: italic;
+  line-height: var(--leading-snug);
+  color: var(--text-inverse-muted);
+  max-width: 30ch;
+}
+
+.menu {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(248, 246, 240, 0.16);
+}
+
+.menuRow {
+  display: grid;
+  gap: var(--space-2xs);
+  padding-block: var(--space-m);
+  border-bottom: 1px solid rgba(248, 246, 240, 0.16);
+}
+
+.menuTime {
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--warm-sand);
+}
+
+.menuDish {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: var(--leading-snug);
+  color: var(--soft-white);
+  max-width: 34ch;
+}
+
+/* The caption colour has to be lifted on the dark surface to stay legible. */
+.detailPlate figcaption,
+.tablePlate figcaption {
+  color: var(--text-inverse-muted);
+}
+
+@media (min-width: 48rem) {
+  .menuRow {
+    grid-template-columns: 8rem 1fr;
+    gap: var(--space-m);
+    align-items: baseline;
+  }
+}
+
+@media (min-width: 64rem) {
+  .body {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+  }
+
+  /* Drops the menu column so the two sides never begin on the same line. */
+  .menuColumn {
+    margin-top: var(--space-2xl);
+  }
+
+  .detailPlate {
+    max-width: 68%;
+    margin-left: auto;
+  }
+}

@@ -1,0 +1,26 @@
+.frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--warm-sand);
+}
+
+.inner {
+  position: absolute;
+  /* Only `transform` is written by the parallax tween — never top/height — so
+     scrubbing stays on the compositor and never triggers layout. */
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.inner > * {
+  width: 100%;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner {
+    will-change: auto;
+    transform: none !important;
+  }
+}

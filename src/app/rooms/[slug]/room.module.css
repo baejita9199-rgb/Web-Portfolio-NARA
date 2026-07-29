@@ -1,0 +1,220 @@
+.page {
+  background-color: var(--rice-paper);
+  padding-top: calc(var(--nav-height) + var(--space-2xl));
+  padding-bottom: var(--space-3xl);
+  min-height: 100dvh;
+}
+
+.inner {
+  max-width: 74rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  max-width: 46rem;
+}
+
+.eyebrow {
+  display: flex;
+  gap: var(--space-xs);
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.eyebrowLink {
+  color: var(--clay-brown);
+  border-bottom: 1px solid transparent;
+}
+
+.eyebrowLink:hover,
+.eyebrowLink:focus-visible {
+  border-bottom-color: currentColor;
+}
+
+.title {
+  font-size: var(--step-6);
+  line-height: 1.02;
+}
+
+.lede {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-style: italic;
+  line-height: var(--leading-snug);
+  color: var(--text-secondary);
+  max-width: 34ch;
+}
+
+.heroFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background-color: var(--warm-sand);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.detail {
+  display: grid;
+  gap: var(--space-xl) var(--gutter);
+}
+
+.specs {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-m);
+  align-content: start;
+  border-top: 1px solid var(--rule);
+  padding-top: var(--space-m);
+}
+
+.spec {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.spec dt {
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.spec dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-s);
+  border-top: 1px solid var(--rule);
+  padding-top: var(--space-m);
+}
+
+.featuresTitle {
+  font-size: var(--step--2);
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.featureList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  font-size: var(--step-1);
+}
+
+.rateNote {
+  font-size: var(--step--2);
+  color: var(--text-muted);
+  max-width: 40ch;
+}
+
+.gallery {
+  display: grid;
+  gap: var(--gutter);
+}
+
+.galleryFigure {
+  margin: 0;
+}
+
+.galleryFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--warm-sand);
+}
+
+.others {
+  border-top: 1px solid var(--rule);
+  padding-top: var(--space-m);
+}
+
+.othersTitle {
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-s);
+}
+
+.othersList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-m);
+}
+
+.otherLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  padding-bottom: var(--space-2xs);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-fast) var(--ease-out-soft);
+}
+
+.otherLink:hover,
+.otherLink:focus-visible {
+  border-bottom-color: var(--sand-veil-strong);
+}
+
+.otherMeta {
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.disclaimer {
+  font-size: var(--step--2);
+  line-height: var(--leading-snug);
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+@media (min-width: 48rem) {
+  .detail {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .othersList {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .otherLink {
+    transition: none;
+  }
+}
