@@ -32,7 +32,7 @@
   font-size: var(--step--2);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--clay-brown);
+  color: var(--clay-ink);
   /* Aligns the number with the x-height of the caption beside it. */
   transform: translateY(-0.05em);
 }

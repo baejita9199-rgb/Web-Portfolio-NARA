@@ -35,6 +35,7 @@ changing an art-direction recipe.
 | `npm run test` | Vitest unit suite |
 | `npm run test:e2e` | Playwright suite (requires a build first) |
 | `npm run generate:media` | Regenerate every placeholder image and clip |
+| `npm run measure:performance` | Record LCP, CLS and load weight from a real browser |
 | `npm run verify` | lint → typecheck → test → build |
 
 ---
@@ -228,6 +229,29 @@ images marked empty, and text alternatives for atmospheric clips.
 Nothing on any viewport depends on hover: the desktop hover previews in *The
 Surroundings* and *Notes from the House* are enhancements, and the same
 information is rendered inline on narrow screens.
+
+**This is verified, not claimed.** `e2e/accessibility.spec.ts` runs axe-core
+against WCAG 2.0/2.1 A and AA on every page type, on the booking panel in both
+its states, on the mobile menu and on the room gallery — zero violations on both
+viewports. Because axe cannot see through a photograph and silently assumes a
+white background, the hero's contrast is instead measured from rendered pixels.
+See [docs/PERFORMANCE.md](docs/PERFORMANCE.md#accessibility) for what the audit
+found and changed.
+
+## Performance
+
+Measured rather than estimated: **LCP 108–216 ms and CLS exactly 0.0000** across
+all four page types on both viewports, with the home page at 284 KB (181 KB of
+which is the hero clip) and every other route around 100 KB.
+
+```bash
+npm run build && npm run start &
+npm run measure:performance
+```
+
+These are localhost figures from a real Chromium, not a Lighthouse score — a
+regression guard rather than a field measurement. Numbers and caveats in
+[docs/PERFORMANCE.md](docs/PERFORMANCE.md).
 
 ---
 

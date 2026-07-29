@@ -13,6 +13,14 @@
   --charcoal: #242421;
   --soft-white: #f8f6f0;
 
+  /*
+   * Small uppercase labels are a signature of this design and they run at
+   * 12px, where WCAG asks for 4.5:1. The brand clay is 3.84:1 on rice paper,
+   * so a deeper ink version exists purely for text; `--clay-brown` stays the
+   * brand colour for rules, borders and anything large.
+   */
+  --clay-ink: #73604f;
+
   /* Derived tints, used for hairlines and quiet washes. */
   --sand-veil: rgba(140, 114, 93, 0.16);
   --sand-veil-strong: rgba(140, 114, 93, 0.32);
@@ -28,9 +36,12 @@
   --surface-night: var(--charcoal);
   --text-primary: var(--charcoal);
   --text-secondary: rgba(36, 36, 33, 0.68);
-  --text-muted: rgba(36, 36, 33, 0.48);
+  /* 0.48 measured 2.84:1 — below the floor for the label sizes it is used at. */
+  --text-muted: rgba(36, 36, 33, 0.66);
   --text-inverse: var(--soft-white);
-  --text-inverse-muted: rgba(248, 246, 240, 0.66);
+  /* Both of these clear 4.5:1 on forest green and on charcoal. */
+  --text-inverse-muted: rgba(248, 246, 240, 0.72);
+  --text-inverse-faint: rgba(248, 246, 240, 0.64);
   --rule: var(--sand-veil);
 
   /* --- Type ------------------------------------------------------------- */

@@ -3,6 +3,34 @@
   background-color: var(--charcoal);
 }
 
+/*
+ * A dedicated band behind the bottom furniture.
+ *
+ * The location line and the scroll hint are pinned to the bottom edge, where
+ * the footage can be any brightness at all — on a pale frame the measured
+ * contrast fell to 2.5:1. This grounds that strip specifically, rather than
+ * darkening the whole photograph to solve one row of small text.
+ */
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(7rem, 16vh, 11rem);
+  z-index: var(--z-content);
+  pointer-events: none;
+  /* Weighted for the worst case rather than the average frame: the portrait
+     crop can put bright sky directly behind this row. */
+  background: linear-gradient(
+    to top,
+    rgba(20, 20, 18, 0.92),
+    rgba(20, 20, 18, 0.66) 38%,
+    rgba(20, 20, 18, 0.3) 70%,
+    rgba(20, 20, 18, 0)
+  );
+}
+
 .mediaFrame {
   position: absolute;
   inset: 0;
@@ -98,7 +126,8 @@
   font-size: var(--step--2);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: rgba(248, 246, 240, 0.62);
+  /* Near-solid: this row sits on footage, not on a known surface. */
+  color: rgba(248, 246, 240, 0.92);
 }
 
 .locationDetail {
@@ -117,7 +146,8 @@
   font-size: var(--step--2);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: rgba(248, 246, 240, 0.62);
+  /* Near-solid: this row sits on footage, not on a known surface. */
+  color: rgba(248, 246, 240, 0.92);
 }
 
 .scrollLine {

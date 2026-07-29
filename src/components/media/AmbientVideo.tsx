@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { breakpoints, useMediaQuery } from "@/hooks/useMediaQuery";
 import { useIntersectionVideo } from "@/hooks/useIntersectionVideo";
+import { useIsHydrated } from "@/hooks/useIsHydrated";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import {
   resolvePoster,
@@ -60,6 +61,7 @@ export function AmbientVideo({
 }: AmbientVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isMobile = useMediaQuery(breakpoints.mobile);
+  const isHydrated = useIsHydrated();
   const prefersReducedMotion = useReducedMotion();
   const [hasErrored, setHasErrored] = useState(false);
 
@@ -76,7 +78,15 @@ export function AmbientVideo({
   });
 
   const activePoster = resolvePoster(poster, mobilePoster, isMobile);
-  const shouldAttachSources = canPlay && (priority || shouldLoad);
+  /*
+   * Sources are never written during the hydration pass. A `<source>` in the
+   * server HTML is chosen before the viewport is known, and the browser starts
+   * fetching it immediately — which had a phone downloading the landscape hero
+   * crop and never the portrait one. Waiting one render costs nothing visible,
+   * because the poster is already painted.
+   */
+  const shouldAttachSources =
+    canPlay && isHydrated && (priority || shouldLoad);
   const sources = resolveVideoSources({
     desktopSrc,
     mobileSrc,
@@ -84,6 +94,17 @@ export function AmbientVideo({
     mobileFallbackSrc,
     isMobile,
   });
+
+  /*
+   * A media element that ran its resource-selection algorithm with no sources
+   * sits in NETWORK_NO_SOURCE and will not retry on its own, so selection is
+   * kicked once the correct source has been attached.
+   */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !shouldAttachSources) return;
+    if (video.networkState === video.NETWORK_NO_SOURCE) video.load();
+  }, [shouldAttachSources]);
 
   return (
     <div className={[styles.frame, className].filter(Boolean).join(" ")}>

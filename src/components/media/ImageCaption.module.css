@@ -21,7 +21,7 @@
   font-size: var(--step--2);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--clay-brown);
+  color: var(--clay-ink);
 }
 
 .caption[data-tone="dark"] .plate {

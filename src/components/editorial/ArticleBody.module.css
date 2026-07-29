@@ -31,7 +31,7 @@
   float: left;
   padding-right: 0.1em;
   padding-top: 0.06em;
-  color: var(--clay-brown);
+  color: var(--clay-ink);
 }
 
 .subhead {
@@ -117,7 +117,7 @@
   font-size: var(--step--2);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--clay-brown);
+  color: var(--clay-ink);
   margin-bottom: var(--space-s);
 }
 
@@ -147,7 +147,7 @@
   top: 0.75em;
   width: var(--space-xs);
   height: 1px;
-  background-color: var(--clay-brown);
+  background-color: var(--clay-ink);
 }
 
 @media (min-width: 64rem) {

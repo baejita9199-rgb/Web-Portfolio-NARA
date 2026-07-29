@@ -85,7 +85,7 @@
 }
 
 .captionBrand {
-  color: var(--clay-brown);
+  color: var(--clay-ink);
 }
 
 @media (min-width: 64rem) {

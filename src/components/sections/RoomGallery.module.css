@@ -94,7 +94,7 @@
   font-size: var(--step--2);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: rgba(248, 246, 240, 0.48);
+  color: var(--text-inverse-faint);
 }
 
 .spec dd {
@@ -166,7 +166,7 @@
   font-size: var(--step--2);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: rgba(248, 246, 240, 0.58);
+  color: var(--text-inverse-muted);
   font-variant-numeric: tabular-nums;
 }
 

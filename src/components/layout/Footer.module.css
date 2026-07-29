@@ -96,7 +96,8 @@
   font-size: var(--step--2);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--clay-brown);
+  /* Warm sand, not the light-surface clay ink: this footer is on charcoal. */
+  color: var(--warm-sand);
 }
 
 .bottom {
@@ -122,7 +123,7 @@
   font-size: var(--step--2);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: rgba(248, 246, 240, 0.42);
+  color: var(--text-inverse-faint);
 }
 
 .coordinates {

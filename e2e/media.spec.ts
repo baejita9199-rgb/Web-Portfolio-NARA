@@ -81,6 +81,35 @@ test.describe("Ambient video system", () => {
       .toBeGreaterThan(0);
   });
 
+  test("fetches the crop that matches the viewport, and only that one", async ({
+    page,
+    viewport,
+  }) => {
+    const requested: string[] = [];
+    page.on("request", (request) => {
+      if (request.url().includes("/nara-house/video/")) {
+        requested.push(request.url().split("/").pop() ?? "");
+      }
+    });
+
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+    await expect
+      .poll(() => requested.length, { timeout: 10_000 })
+      .toBeGreaterThan(0);
+
+    const expected =
+      (viewport?.width ?? 1440) < 768 ? "hero-mobile.webm" : "hero-desktop.webm";
+
+    // The wrong crop must not merely be unused — it must never be fetched. The
+    // source list is therefore written after hydration, when the viewport is
+    // actually known, rather than guessed during server rendering.
+    expect(requested).toContain(expected);
+    expect(requested.filter((file) => file.startsWith("hero-"))).toEqual([
+      expected,
+    ]);
+  });
+
   test("pauses everything when the tab is hidden", async ({ page }) => {
     await page.goto("/");
     const hero = page.locator("#arrival video");

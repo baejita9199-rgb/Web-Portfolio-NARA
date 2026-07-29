@@ -86,7 +86,7 @@
 }
 
 .menuSeason {
-  color: rgba(248, 246, 240, 0.42);
+  color: var(--text-inverse-faint);
 }
 
 .menuDish {
@@ -107,7 +107,7 @@
 .menuNote {
   font-size: var(--step--1);
   line-height: var(--leading-snug);
-  color: rgba(248, 246, 240, 0.56);
+  color: var(--text-inverse-muted);
 }
 
 /* --------------------------------------------------------------------------

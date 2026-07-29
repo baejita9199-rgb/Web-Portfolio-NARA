@@ -56,6 +56,24 @@
   );
 }
 
+/*
+ * On a narrow viewport the copy spans the full width, so a wash from the left
+ * edge does almost nothing for it — measured contrast on the portrait hero crop
+ * fell to 2.8:1. Below 48rem the same layer becomes a bottom-weighted wash,
+ * which is where the type actually sits.
+ */
+@media (max-width: 47.99rem) {
+  .scrim[data-focus="corner"]::after {
+    background: linear-gradient(
+      to top,
+      rgba(36, 36, 33, 0.72),
+      rgba(36, 36, 33, 0.5) 38%,
+      rgba(36, 36, 33, 0.28) 68%,
+      rgba(36, 36, 33, 0.16)
+    );
+  }
+}
+
 .scrim[data-overlay="soft"] {
   background: linear-gradient(
     to top,
