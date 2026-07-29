@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Pinned to the floor of the supported range in package.json, so CI is
       # what keeps that claim honest — development happens on a current Node.
@@ -27,7 +27,7 @@ jobs:
       # wrong `engines` value) failed here: Node 20.9 has no `util.styleText`,
       # so Vitest could not start at all. 22.12.0 is chosen over 20.19.0
       # because the Node 20 line reached end of life in April 2026.
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22.12.0
           cache: npm
