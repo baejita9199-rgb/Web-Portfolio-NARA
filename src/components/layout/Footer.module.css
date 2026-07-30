@@ -126,6 +126,18 @@
   color: var(--text-inverse-faint);
 }
 
+.studioLink {
+  color: var(--text-inverse);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(248, 246, 240, 0.32);
+  transition: border-color var(--duration-fast) var(--ease-out-soft);
+}
+
+.studioLink:hover,
+.studioLink:focus-visible {
+  border-bottom-color: var(--text-inverse);
+}
+
 .coordinates {
   font-variant-numeric: tabular-nums;
 }

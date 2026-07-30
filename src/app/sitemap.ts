@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { journalEntries } from "@/content/journal";
 import { rooms } from "@/content/rooms";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nara-house.example";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://nara.jedsada-payakorn.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // A fixed build date keeps successive builds byte-identical, which makes the
