@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { navigationLinks, site } from "@/content/site";
+import { STUDIO_SITE_URL } from "@/lib/studio-links";
 import styles from "./Footer.module.css";
 
 export function Footer() {
@@ -54,7 +55,15 @@ export function Footer() {
           <p className={styles.disclaimer}>{site.disclaimer}</p>
           <p className={styles.credit}>
             <span>
-              {year} — A concept project by {site.studio}
+              {year} — A concept project by{" "}
+              <a
+                className={styles.studioLink}
+                href={STUDIO_SITE_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {site.studio}
+              </a>
             </span>
             <span className={styles.coordinates}>
               {site.location.coordinatesLabel}

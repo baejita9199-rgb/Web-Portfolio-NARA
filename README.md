@@ -50,11 +50,11 @@ cp .env.example .env.local
 
 The one worth knowing about is **`NEXT_PUBLIC_SITE_URL`**, the absolute base for
 canonical URLs, Open Graph tags, `robots.txt` and `sitemap.xml`. It defaults to
-`https://nara-house.example` — a reserved TLD that cannot resolve, so a build
-with nothing set never advertises an address that might be taken for a real
-business. Set it to the origin the site is served from, without a trailing
-slash, and set it at **build** time: the `NEXT_PUBLIC_` prefix inlines it into
-the client bundle, so `next start` is too late.
+`https://nara.jedsada-payakorn.com`, the origin the site is served from — the
+same custom domain `wrangler.jsonc` routes. Override it only for a preview
+deployment that should advertise its own origin, without a trailing slash, and
+set it at **build** time: the `NEXT_PUBLIC_` prefix inlines it into the client
+bundle, so `next start` is too late.
 
 `FFMPEG_PATH` and `PORT` affect only media generation and the Playwright suite
 respectively; both are documented in `.env.example`.

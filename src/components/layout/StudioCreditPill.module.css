@@ -1,0 +1,161 @@
+.root {
+  position: fixed;
+  left: var(--gutter);
+  bottom: calc(var(--gutter) + 3.25rem);
+  z-index: var(--z-menu);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgba(248, 246, 240, 0.22);
+  border-radius: 999px;
+  background: rgba(26, 24, 21, 0.6);
+  backdrop-filter: blur(14px);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-inverse-muted);
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-out-soft),
+    border-color var(--duration-fast) var(--ease-out-soft);
+}
+
+.toggle:hover,
+.toggle:focus-visible,
+.root[data-open="true"] .toggle {
+  color: var(--text-inverse);
+  border-color: rgba(248, 246, 240, 0.5);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--warm-sand);
+}
+
+.caret {
+  font-size: 0.5rem;
+  opacity: 0.7;
+  transition: transform var(--duration-fast) var(--ease-out-soft);
+}
+
+.root[data-open="true"] .caret {
+  transform: rotate(180deg);
+}
+
+/* ยุบด้วย grid-template-rows 0fr → 1fr เพื่อ animate ความสูงโดยไม่ต้องล็อกค่าไว้ */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    grid-template-rows var(--duration-base) var(--ease-out-soft),
+    opacity var(--duration-base) var(--ease-out-soft);
+}
+
+.root[data-open="true"] .panel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.panelInner {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(248, 246, 240, 0.18);
+  border-radius: 12px;
+  background: rgba(26, 24, 21, 0.92);
+  backdrop-filter: blur(14px);
+}
+
+.panelHeading {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid rgba(248, 246, 240, 0.12);
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: rgba(248, 246, 240, 0.5);
+  white-space: nowrap;
+}
+
+.labelShort {
+  display: none;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-inverse-faint);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--duration-fast) var(--ease-out-soft);
+}
+
+.action + .action {
+  border-top: 1px solid rgba(248, 246, 240, 0.12);
+}
+
+.action:hover,
+.action:focus-visible {
+  color: var(--text-inverse);
+}
+
+.arrow {
+  color: var(--warm-sand);
+}
+
+.root[data-open="false"] .action {
+  /* ตอนยุบต้องออกจากลำดับ tab ด้วย ไม่ใช่แค่มองไม่เห็น */
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .caret,
+  .toggle {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .root {
+    left: 0.75rem;
+    /* ต้องพ้นแถบ NORTHERN THAILAND · RESIDENCE NO. 01 ที่ก้นฮีโร่ */
+    bottom: 3.5rem;
+  }
+
+  .toggle {
+    font-size: 0.625rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* ป้ายเต็มกินความกว้างเกือบทั้งจอโทรศัพท์ — ย่อเหลือชื่อสตูดิโอ
+     ส่วนคำว่า Concept project ไปอยู่หัวแผงที่กางออก */
+  .labelFull {
+    display: none;
+  }
+
+  .labelShort {
+    display: inline;
+  }
+}

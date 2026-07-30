@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { BookingProvider } from "@/components/booking/BookingProvider";
 import { Footer } from "@/components/layout/Footer";
 import { SiteNavigation } from "@/components/layout/SiteNavigation";
+import { StudioCreditPill } from "@/components/layout/StudioCreditPill";
 import { naraAssets } from "@/content/assets";
 import { site } from "@/content/site";
 import "./globals.css";
@@ -27,7 +28,8 @@ const body = Manrope({
  * overridable so a preview deployment advertises its own address rather than
  * the production one.
  */
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nara-house.example";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://nara.jedsada-payakorn.com";
 
 const description =
   "A fictional boutique retreat shaped by forest, natural materials and unhurried living. A hospitality concept project by Jedsada Creative Technology Studio.";
@@ -104,6 +106,7 @@ export default function RootLayout({
           <SiteNavigation />
           <main id="main-content">{children}</main>
           <Footer />
+          <StudioCreditPill />
         </BookingProvider>
       </body>
     </html>
